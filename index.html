@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda Elizabeth & Víctor | Bautizo Camille</title>
+    <!-- Fuentes Elegantes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Música -->
+    <audio id="bg-music" loop>
+        <source src="assets/audio/ruta-a-tu-musica.mp3" type="audio/mpeg">
+    </audio>
+    <button id="music-toggle" class="music-btn" style="display:none;">⏸ Música</button>
+
+    <!-- 1. INTRODUCCIÓN INTERACTIVA -->
+    <div id="intro-screen">
+        <div class="intro-stage" id="intro-stage">
+            <div class="envelope-scene" id="envelope-scene">
+
+                <!-- SOBRE -->
+                <div id="envelope-container" role="button" tabindex="0" aria-label="Abrir invitación">
+                    <div class="envelope-back envelope-surface"></div>
+                    <div class="envelope-front envelope-surface"></div>
+                    <div class="envelope-flap envelope-surface" id="envelope-flap"></div>
+
+                    <div class="envelope-seal" id="envelope-seal" aria-hidden="true">
+                        <img src="assets/img/sobre/sello-sobre.png" alt="" class="envelope-seal-image">
+                    </div>
+                </div>
+
+                <!-- Carta independiente para poder atravesar correctamente las capas del sobre -->
+                <div class="envelope-paper-clip">
+                    <div class="envelope-paper" id="envelope-paper">
+                        <div class="envelope-paper-content envelope-paper-art">
+                            <img src="assets/img/carta/carta-inicial.png" alt="Tarjeta de apertura con fotos de infancia de Elizabeth y Víctor" class="envelope-card-art">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="open-envelope-btn" class="envelope-open-btn" type="button">
+                <span class="open-icon">✦</span>
+                Toca para abrir
+            </button>
+        </div>
+
+        <!-- VIDEO -->
+        <video id="intro-video" playsinline preload="auto">
+            <source src="assets/video/ruta-a-tu-video-acuarela.mp4" type="video/mp4">
+            Tu navegador no puede reproducir este video.
+        </video>
+
+        <button id="skip-video" class="btn-skip" type="button">
+            Continuar a la invitación
+        </button>
+    </div>
+
+    <!-- 2. INVITACIÓN PRINCIPAL -->
+    <div id="main-content">
+        <!-- GALERÍA LIBRE NARRATIVA — mosaico continuo con separadores por capítulos -->
+        <section class="story-section story-mosaic-section" aria-labelledby="story-lead">
+            <div class="story-top-art" aria-hidden="true">
+                <img src="assets/Gemini_Generated_Image_ (1).jpg - Editado.png" alt="" class="story-mountains">
+            </div>
+
+            <p class="story-eyebrow">Nuestra historia</p>
+            <p id="story-lead" class="story-kicker">Un álbum abierto para recorrer nuestra historia, de principio a fin.</p>
+            <p class="story-lead-text">Tres capítulos, muchos recuerdos y un mismo camino. Cada fotografía guarda un fragmento de lo vivido y nos acerca, paso a paso, a este nuevo comienzo.</p>
+
+            <div class="story-mosaic" aria-label="Galería de nuestra historia">
+
+                <header class="story-divider story-divider-compact">
+                    <span class="story-divider-number" aria-hidden="true">01</span>
+                    <div class="story-divider-copy">
+                        <span class="story-label">Capítulo uno</span>
+                        <h2>Donde todo comenzó</h2>
+                        <p>Los primeros recuerdos, las miradas sinceras y aquellas aventuras que, sin saberlo, comenzaban a escribir nuestra historia.</p>
+                    </div>
+                    <span class="story-divider-floral" aria-hidden="true"></span>
+                </header>
+
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 1 de Cuando comenzó nuestra historia">
+                    <img src="assets/img/galeria/c01-01.jpg" alt="Cuando comenzó nuestra historia — recuerdo 1" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>01</strong><small>Cuando comenzó nuestra historia</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 2 de Cuando comenzó nuestra historia">
+                    <img src="assets/img/galeria/c01-02.jpg" alt="Cuando comenzó nuestra historia — recuerdo 2" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>02</strong><small>Cuando comenzó nuestra historia</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 3 de Cuando comenzó nuestra historia">
+                    <img src="assets/img/galeria/c01-03.jpg" alt="Cuando comenzó nuestra historia — recuerdo 3" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>03</strong><small>Cuando comenzó nuestra historia</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 4 de Cuando comenzó nuestra historia">
+                    <img src="assets/img/galeria/c01-04.jpg" alt="Cuando comenzó nuestra historia — recuerdo 4" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>04</strong><small>Cuando comenzó nuestra historia</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 5 de Cuando comenzó nuestra historia">
+                    <img src="assets/img/galeria/c01-05.jpg" alt="Cuando comenzó nuestra historia — recuerdo 5" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>05</strong><small>Cuando comenzó nuestra historia</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 6 de Cuando comenzó nuestra historia">
+                    <img src="assets/img/galeria/c01-06.jpg" alt="Cuando comenzó nuestra historia — recuerdo 6" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>06</strong><small>Cuando comenzó nuestra historia</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 7 de Cuando comenzó nuestra historia">
+                    <img src="assets/img/galeria/c01-07.jpg" alt="Cuando comenzó nuestra historia — recuerdo 7" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>07</strong><small>Cuando comenzó nuestra historia</small></span>
+                </button>
+
+                <header class="story-divider story-divider-compact story-divider-right">
+                    <span class="story-divider-number" aria-hidden="true">02</span>
+                    <div class="story-divider-copy">
+                        <span class="story-label">Capítulo dos</span>
+                        <h2>Nuestro camino</h2>
+                        <p>Con el tiempo llegaron nuevos recuerdos, viajes, sueños y promesas; y, paso a paso, la certeza de querer seguir caminando juntos hacia un mismo horizonte.</p>
+                    </div>
+                    <span class="story-divider-floral" aria-hidden="true"></span>
+                </header>
+
+                <button class="mosaic-photo mosaic-photo-wide" type="button" aria-label="Ampliar foto 1 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-01.jpg" alt="Nuestro camino — recuerdo 1" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>01</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 2 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-02.jpg" alt="Nuestro camino — recuerdo 2" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>02</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-soft-wide" type="button" aria-label="Ampliar foto 3 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-03.jpg" alt="Nuestro camino — recuerdo 3" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>03</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 4 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-04.jpg" alt="Nuestro camino — recuerdo 4" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>04</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 5 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-05.jpg" alt="Nuestro camino — recuerdo 5" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>05</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 6 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-06.jpg" alt="Nuestro camino — recuerdo 6" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>06</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 7 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-07.jpg" alt="Nuestro camino — recuerdo 7" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>07</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 8 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-08.jpg" alt="Nuestro camino — recuerdo 8" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>08</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 9 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-09.jpg" alt="Nuestro camino — recuerdo 9" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>09</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 10 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-10.jpg" alt="Nuestro camino — recuerdo 10" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>10</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 11 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-11.jpg" alt="Nuestro camino — recuerdo 11" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>11</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 12 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-12.jpg" alt="Nuestro camino — recuerdo 12" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>12</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 13 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-13.jpg" alt="Nuestro camino — recuerdo 13" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>13</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 14 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-14.jpg" alt="Nuestro camino — recuerdo 14" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>14</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 15 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-15.jpg" alt="Nuestro camino — recuerdo 15" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>15</strong><small>Nuestro camino</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 16 de Nuestro camino">
+                    <img src="assets/img/galeria/c02-16.jpg" alt="Nuestro camino — recuerdo 16" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>16</strong><small>Nuestro camino</small></span>
+                </button>
+
+                <header class="story-divider story-divider-compact story-divider-final">
+                    <span class="story-divider-number" aria-hidden="true">03</span>
+                    <div class="story-divider-copy">
+                        <span class="story-label">Capítulo tres</span>
+                        <h2>Ahora somos tres</h2>
+                        <p>Nuestra historia creció con la llegada de Camille. El amor que comenzó siendo de dos encontró una nueva forma de crecer; desde entonces, nuestro camino se escribe de a tres.</p>
+                    </div>
+                    <span class="story-divider-floral" aria-hidden="true"></span>
+                </header>
+
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 1 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-01.jpg" alt="Ahora somos tres — recuerdo 1" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>01</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 2 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-02.jpg" alt="Ahora somos tres — recuerdo 2" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>02</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 3 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-03.jpg" alt="Ahora somos tres — recuerdo 3" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>03</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 4 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-04.jpg" alt="Ahora somos tres — recuerdo 4" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>04</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 5 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-05.jpg" alt="Ahora somos tres — recuerdo 5" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>05</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 6 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-06.jpg" alt="Ahora somos tres — recuerdo 6" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>06</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 7 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-07.jpg" alt="Ahora somos tres — recuerdo 7" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>07</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 8 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-08.jpg" alt="Ahora somos tres — recuerdo 8" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>08</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo mosaic-photo-tall" type="button" aria-label="Ampliar foto 9 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-09.jpg" alt="Ahora somos tres — recuerdo 9" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>09</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 10 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-10.jpg" alt="Ahora somos tres — recuerdo 10" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>10</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 11 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-11.jpg" alt="Ahora somos tres — recuerdo 11" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>11</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 12 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-12.jpg" alt="Ahora somos tres — recuerdo 12" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>12</strong><small>Ahora somos tres</small></span>
+                </button>
+                <button class="mosaic-photo" type="button" aria-label="Ampliar foto 13 de Ahora somos tres">
+                    <img src="assets/img/galeria/c03-13.jpg" alt="Ahora somos tres — recuerdo 13" loading="lazy">
+                    <span class="mosaic-placeholder"><strong>13</strong><small>Ahora somos tres</small></span>
+                </button>
+
+            </div>
+
+            <p class="story-closing">De aquellos primeros recuerdos a la familia que hoy somos…<br><span>Gracias por recorrer nuestra historia con nosotros. Aún quedan muchas páginas por escribir.</span></p>
+            <p class="story-gallery-hint">Toca una foto para verla en grande.</p>
+        </section>
+
+        <div id="story-lightbox" class="story-lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Vista ampliada de la galería">
+            <button class="story-lightbox-close" type="button" aria-label="Cerrar foto">×</button>
+            <button class="story-lightbox-nav story-lightbox-prev" type="button" aria-label="Foto anterior">‹</button>
+            <figure class="story-lightbox-figure">
+                <img id="story-lightbox-image" src="" alt="">
+                <figcaption id="story-lightbox-caption"></figcaption>
+            </figure>
+            <button class="story-lightbox-nav story-lightbox-next" type="button" aria-label="Foto siguiente">›</button>
+            <span id="story-lightbox-counter" class="story-lightbox-counter" aria-live="polite"></span>
+        </div>
+
+        <div class="floral-divider animate hidden fade-in"></div>
+        
+        <!-- Bienvenida -->
+        <section class="section-container welcome-section animate hidden slide-up" aria-labelledby="welcome-title">
+            <h1 class="main-title" id="welcome-title">Elizabeth & Víctor</h1>
+            <p class="subtitle welcome-intro">Con el amor que nos une y la bendición de Dios</p>
+
+            <div class="nombres-padres">
+                <h2 class="family-heading">Nuestros padres</h2>
+                <p class="family-names">Miguel Zhapan<br><span>&amp;</span><br>María de Lourdes Ñacato</p>
+                <p class="family-names">Manuel España<br><span>&amp;</span><br>Jimena Cruz</p>
+
+                <h2 class="family-heading">Nuestros padrinos</h2>
+                <p class="family-names">Diego Pailliacho<br><span>&amp;</span><br>Diana España</p>
+                <p class="family-names">Dario Narvaez<br><span>&amp;</span><br>Ana María España</p>
+            </div>
+
+            <p class="romantic-text">Los esperamos con mucha alegría para compartir este nuevo comienzo.</p>
+        </section>
+
+        <div class="floral-divider"></div>
+
+        <!-- FASE 3: Fecha protagonista + calendario -->
+        <section class="section-container date-section animate hidden fade-in" aria-labelledby="date-title">
+            <p class="date-intro">Y este nuevo capítulo ya tiene fecha…</p>
+            <p class="date-eyebrow">Reserva este día</p>
+            <div class="date-hero" id="date-title" aria-label="Sábado 5 de diciembre de 2026 a las 9 de la mañana">
+                <span class="date-day">05</span>
+                <span class="date-month">DICIEMBRE</span>
+                <span class="date-year">2026</span>
+            </div>
+            <p class="date-time">Sábado · 9:00 h</p>
+            <button id="add-calendar" class="btn-calendar" type="button">＋ Agregar a mi calendario</button>
+
+            <div class="countdown countdown-compact" aria-label="Cuenta regresiva para el evento">
+                <div class="time-box"><span id="dias">00</span><label>Días</label></div>
+                <div class="time-box"><span id="horas">00</span><label>Horas</label></div>
+                <div class="time-box"><span id="min">00</span><label>Min</label></div>
+                <div class="time-box"><span id="seg">00</span><label>Seg</label></div>
+            </div>
+        </section>
+
+        <div class="floral-divider animate hidden fade-in"></div>
+
+        <!-- Bloque 3: Bautizo Camille -->
+        <div class="section-container animate hidden slide-up">
+            <h2 class="section-title">Camille Eleonor</h2>
+            <img src="assets/img/Foto-Camille.png" alt="Camille Eleonor" class="camille-photo">
+            <p class="bautizo-text">Y porque ella es parte esencial de nuestra historia, queremos compartir con ustedes dos momentos muy especiales en su vida:</p>
+            <p class="bautizo-highlight">la bendición de su bautizo y la alegría de celebrar su primer añito.</p>
+        </div>
+
+        <!-- FASE 3: Detalles, ubicaciones y vestimenta -->
+        <section class="section-container details-section animate hidden slide-up" aria-labelledby="details-title">
+            <p class="section-overline">Un día, tres motivos para celebrar</p>
+            <h2 class="section-title" id="details-title">Ceremonia & celebración</h2>
+
+            <div class="event-cards">
+                <article class="event-card event-card-ceremony">
+                    <div class="event-card-head">
+                        <span class="event-card-symbol" aria-hidden="true">✦</span>
+                        <span class="event-card-time">9:00</span>
+                    </div>
+                    <p class="event-card-kicker">Nuestra ceremonia</p>
+                    <h3>Boda & bautizo</h3>
+                    <p class="event-card-place">Iglesia Chillo Compañía</p>
+                    <p class="event-card-address">Rumiñahui · Sangolquí</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Iglesia%20Chillo%20Compa%C3%B1%C3%ADa%2C%20Sangolqu%C3%AD%2C%20Ecuador" target="_blank" rel="noopener noreferrer" class="event-route-btn">Ver ruta en Maps <span aria-hidden="true">↗</span></a>
+                </article>
+
+                <article class="event-card event-card-celebration">
+                    <div class="event-card-head">
+                        <span class="event-card-symbol" aria-hidden="true">◇</span>
+                        <span class="event-card-time">A continuación</span>
+                    </div>
+                    <p class="event-card-kicker">Celebración</p>
+                    <h3>Recepción</h3>
+                    <p class="event-card-place">Quinta El Carmen</p>
+                    <p class="event-card-address">Juan de Salinas 525 · Sangolquí</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Quinta%20El%20Carmen%2C%20Juan%20de%20Salinas%20525%2C%20Sangolqu%C3%AD%2C%20Ecuador" target="_blank" rel="noopener noreferrer" class="event-route-btn">Ver ruta en Maps <span aria-hidden="true">↗</span></a>
+                </article>
+            </div>
+
+            <div class="dress-note">
+                <span class="dress-icon" aria-hidden="true">✦</span>
+                <div>
+                    <p class="dress-label">Código de vestimenta</p>
+                    <h3>Formal</h3>
+                    <p><strong>Damas:</strong> sugerimos evitar el color blanco y beige. <strong>Caballeros:</strong> camisa y corbata.</p>
+                    <p class="dress-weather">Les sugerimos contemplar un abrigo para la tarde andina.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="floral-divider animate hidden fade-in"></div>
+
+        <!-- FASE 3: Regalo discreto y desplegable -->
+        <section class="section-container gift-section animate hidden slide-up" aria-labelledby="gift-title">
+            <p class="section-overline">Con cariño</p>
+            <h2 class="section-title" id="gift-title">Un detalle para este nuevo capítulo</h2>
+            <p class="gift-lead">Su presencia en este día tan especial será nuestro mejor regalo.</p>
+            <p class="gift-copy">Si desean sumar un detalle a este nuevo capítulo de nuestra historia, lo recibiremos con mucho cariño. Tendremos un buzón de sobres en la recepción y también una opción de transferencia.</p>
+
+            <button id="gift-toggle" class="gift-toggle" type="button" aria-expanded="false" aria-controls="gift-panel">♡ Ver opción de regalo</button>
+
+            <div id="gift-panel" class="gift-panel" hidden>
+                <p class="gift-bank">Banco Pichincha</p>
+                <p>Cuenta de Ahorros</p>
+                <div class="account-copy-row">
+                    <code id="bank-account">0000000000</code>
+                    <button id="copy-account" class="copy-account" type="button">Copiar</button>
+                </div>
+                <p class="gift-holder">Víctor España · CI: 17XXXXXXX</p>
+                <p id="copy-feedback" class="copy-feedback" aria-live="polite"></p>
+            </div>
+        </section>
+
+        <div class="floral-divider animate hidden fade-in"></div>
+
+        <!-- FASE 3: RSVP simplificado -->
+        <section id="rsvp" class="section-container rsvp-section animate hidden slide-up" aria-labelledby="rsvp-title" tabindex="-1">
+            <p class="section-overline">Nos encantará contar contigo</p>
+            <h2 class="section-title" id="rsvp-title">Confirmación de asistencia</h2>
+            <p class="rsvp-note">Por favor, confírmanos antes del <strong>15 de noviembre</strong>.</p>
+
+            <form id="rsvp-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre o familia</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Ej. Familia Pérez">
+                </div>
+
+                <div class="form-group">
+                    <label for="asistencia">¿Podrán acompañarnos?</label>
+                    <select id="asistencia" name="asistencia" required>
+                        <option value="" disabled selected>Selecciona una opción</option>
+                        <option value="Sí, allí estaremos">Sí, allí estaremos</option>
+                        <option value="Lamentablemente no podremos">Lamentablemente no podremos</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="guests-group">
+                    <label for="personas">Número de personas</label>
+                    <input type="number" id="personas" name="personas" min="1" max="12" inputmode="numeric" placeholder="Ej. 2">
+                </div>
+
+                <div class="form-group">
+                    <label for="restricciones">Restricciones alimenticias</label>
+                    <input type="text" id="restricciones" name="restricciones" placeholder="Opcional">
+                </div>
+
+                <button type="submit" id="btn-submit" class="btn-submit">Enviar confirmación</button>
+                <div id="form-response" class="response-msg" aria-live="polite"></div>
+            </form>
+        </section>
+
+        <div class="footer">
+            <p>Con amor, Elizabeth, Víctor y Camille</p>
+        </div>
+    </div>
+
+
+    <!-- CTA flotante: acompaña el recorrido sin ocultar contenido -->
+    <a id="floating-rsvp" class="floating-rsvp" href="#rsvp" aria-label="Ir a confirmación de asistencia">
+        <span class="floating-rsvp-icon" aria-hidden="true">✓</span>
+        <span class="floating-rsvp-label floating-rsvp-label-full">Confirmar asistencia</span>
+        <span class="floating-rsvp-label floating-rsvp-label-short">Confirmar</span>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
