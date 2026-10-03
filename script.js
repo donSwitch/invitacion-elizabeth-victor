@@ -353,7 +353,7 @@ copyAccountBtn?.addEventListener('click', async () => {
 });
 
 /* =========================================================
-   RSVP DINÁMICO + CTA FLOTANTE
+   RSVP DINÁMICO + CTA FLOTANTE + MODAL DE AGRADECIMIENTO
    ========================================================= */
 
 const attendanceSelect = document.getElementById('asistencia');
@@ -361,6 +361,23 @@ const guestsGroup = document.getElementById('guests-group');
 const guestsInput = document.getElementById('personas');
 const floatingRsvp = document.getElementById('floating-rsvp');
 const rsvpSection = document.getElementById('rsvp');
+
+const rsvpThanksModal = document.getElementById('rsvp-thanks-modal');
+const thanksTitle = document.getElementById('thanks-title');
+const thanksCopy = document.getElementById('thanks-copy');
+const guestMessageForm = document.getElementById('guest-message-form');
+const guestMessageInput = document.getElementById('mensaje-novios');
+const sendMessageBtn = document.getElementById('send-message-btn');
+const messageResponse = document.getElementById('message-response');
+const finishInvitationBtn = document.getElementById('finish-invitation');
+const invitationFinale = document.getElementById('invitation-finale');
+
+let currentRsvpId = '';
+
+function createRsvpId() {
+    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+    return `rsvp-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
 
 function updateGuestsField() {
     if (!attendanceSelect || !guestsGroup || !guestsInput) return;
@@ -396,6 +413,60 @@ if (floatingRsvp && rsvpSection) {
     }
 }
 
+function openRsvpThanksModal(attendanceValue) {
+    if (!rsvpThanksModal) return;
+
+    const attending = attendanceValue === 'Sí, allí estaremos';
+    if (thanksTitle) {
+        thanksTitle.textContent = attending
+            ? '¡Qué alegría saber que nos acompañarán!'
+            : 'Gracias por hacernos saber';
+    }
+    if (thanksCopy) {
+        thanksCopy.textContent = attending
+            ? 'Tu confirmación quedó registrada. Nos hace mucha ilusión compartir este día contigo.'
+            : 'Tu respuesta quedó registrada. Gracias por acompañarnos con tu cariño, incluso si esta vez no pueden estar presentes.';
+    }
+
+    if (guestMessageInput) guestMessageInput.value = '';
+    if (messageResponse) messageResponse.textContent = '';
+    if (sendMessageBtn) {
+        sendMessageBtn.disabled = false;
+        sendMessageBtn.textContent = 'Enviar mensaje';
+    }
+
+    rsvpThanksModal.hidden = false;
+    rsvpThanksModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('rsvp-modal-open');
+
+    window.requestAnimationFrame(() => {
+        rsvpThanksModal.classList.add('is-visible');
+        guestMessageInput?.focus({ preventScroll: true });
+    });
+}
+
+function closeRsvpThanksModal() {
+    if (!rsvpThanksModal) return;
+    rsvpThanksModal.classList.remove('is-visible');
+    document.body.classList.remove('rsvp-modal-open');
+    window.setTimeout(() => {
+        rsvpThanksModal.hidden = true;
+        rsvpThanksModal.setAttribute('aria-hidden', 'true');
+    }, 320);
+}
+
+function showInvitationFinale() {
+    closeRsvpThanksModal();
+    if (!invitationFinale) return;
+
+    window.setTimeout(() => {
+        invitationFinale.hidden = false;
+        invitationFinale.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('invitation-finished');
+        window.requestAnimationFrame(() => invitationFinale.classList.add('is-visible'));
+    }, 260);
+}
+
 const scriptURL = 'https://script.google.com/macros/s/AKfycbx6kSCR04kuQr9g3UkfsNht1xD2uwH5Tyw7A9b2_dJ9Ax14ySDMxgaRnxY2gLKX8w90/exec';
 const form = document.getElementById('rsvp-form');
 
@@ -416,25 +487,81 @@ form?.addEventListener('submit', async (event) => {
         return;
     }
 
+    const attendanceValue = String(attendanceSelect?.value || '');
+    currentRsvpId = createRsvpId();
+    const payload = new FormData(form);
+    payload.append('action', 'rsvp');
+    payload.append('rsvp_id', currentRsvpId);
+
     try {
         await fetch(scriptURL, {
             method: 'POST',
             mode: 'no-cors',
-            body: new FormData(form)
+            body: payload
         });
 
-        response.textContent = '¡Confirmación exitosa! Nos vemos pronto.';
+        response.textContent = '¡Confirmación enviada!';
         form.reset();
         updateGuestsField();
         floatingRsvp?.classList.add('is-confirmed');
+        openRsvpThanksModal(attendanceValue);
     } catch {
         response.textContent = 'Hubo un error de conexión. Por favor, intenta nuevamente.';
+        currentRsvpId = '';
     } finally {
         button.textContent = 'Enviar confirmación';
         button.disabled = false;
     }
 });
 
+guestMessageForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const message = guestMessageInput?.value.trim() || '';
+    if (!message) {
+        if (messageResponse) messageResponse.textContent = 'Escribe unas palabras antes de enviarlas.';
+        guestMessageInput?.focus();
+        return;
+    }
+
+    if (!currentRsvpId) {
+        if (messageResponse) messageResponse.textContent = 'No encontramos la confirmación asociada. Puedes escribirnos por WhatsApp al final de la invitación.';
+        return;
+    }
+
+    if (sendMessageBtn) {
+        sendMessageBtn.disabled = true;
+        sendMessageBtn.textContent = 'Enviando...';
+    }
+
+    const messagePayload = new FormData();
+    messagePayload.append('action', 'message');
+    messagePayload.append('rsvp_id', currentRsvpId);
+    messagePayload.append('mensaje', message);
+
+    try {
+        await fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: messagePayload
+        });
+
+        if (messageResponse) messageResponse.textContent = 'Gracias por tus palabras ♡';
+        if (guestMessageInput) guestMessageInput.disabled = true;
+        if (sendMessageBtn) {
+            sendMessageBtn.textContent = 'Mensaje enviado';
+            sendMessageBtn.disabled = true;
+        }
+    } catch {
+        if (messageResponse) messageResponse.textContent = 'No pudimos enviar el mensaje. Puedes intentarlo nuevamente.';
+        if (sendMessageBtn) {
+            sendMessageBtn.textContent = 'Enviar mensaje';
+            sendMessageBtn.disabled = false;
+        }
+    }
+});
+
+finishInvitationBtn?.addEventListener('click', showInvitationFinale);
 /* =========================================================
    LIGHTBOX DE LA GALERÍA
    ========================================================= */

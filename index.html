@@ -336,7 +336,7 @@
                     <h3>Boda & bautizo</h3>
                     <p class="event-card-place">Iglesia Chillo Compañía</p>
                     <p class="event-card-address">Rumiñahui · Sangolquí</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Iglesia%20Chillo%20Compa%C3%B1%C3%ADa%2C%20Sangolqu%C3%AD%2C%20Ecuador" target="_blank" rel="noopener noreferrer" class="event-route-btn">Ver ruta en Maps <span aria-hidden="true">↗</span></a>
+                    <a href="https://maps.app.goo.gl/r7f8dYwJZEH93T8Z7" target="_blank" rel="noopener noreferrer" class="event-route-btn">Ver ruta en Maps <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="event-card event-card-celebration">
@@ -424,8 +424,55 @@
             </form>
         </section>
 
+        <!-- CONTACTO DIRECTO -->
+        <section class="section-container contact-section animate hidden fade-in" aria-labelledby="contact-title">
+            <p class="section-overline">Por si necesitas que sepamos algo…</p>
+            <h2 class="section-title contact-title" id="contact-title">Si necesitas ayuda, escríbenos</h2>
+            <p class="contact-copy">Si tienes alguna pregunta, necesitas ayuda para llegar o quieres comentarnos algo antes del gran día, puedes escribirnos directamente.</p>
+
+            <div class="contact-actions" aria-label="Contactos por WhatsApp">
+                <a class="contact-whatsapp" href="https://wa.me/593998236299?text=Hola%20Elizabeth%2C%20estoy%20revisando%20la%20invitaci%C3%B3n%20y%20quer%C3%ADa%20consultarte%20algo%20sobre%20el%20evento.%20%F0%9F%98%8A" target="_blank" rel="noopener noreferrer">
+                    <span aria-hidden="true">♡</span> Escribir a Elizabeth
+                </a>
+                <a class="contact-whatsapp" href="https://wa.me/593979376372?text=Hola%20V%C3%ADctor%2C%20estoy%20revisando%20la%20invitaci%C3%B3n%20y%20quer%C3%ADa%20consultarte%20algo%20sobre%20el%20evento.%20%F0%9F%98%8A" target="_blank" rel="noopener noreferrer">
+                    <span aria-hidden="true">♡</span> Escribir a Víctor
+                </a>
+            </div>
+        </section>
+
         <div class="footer">
             <p>Con amor, Elizabeth, Víctor y Camille</p>
+        </div>
+    </div>
+
+
+    <!-- MODAL DE AGRADECIMIENTO RSVP -->
+    <div id="rsvp-thanks-modal" class="rsvp-thanks-modal" hidden aria-hidden="true">
+        <div class="rsvp-thanks-backdrop" data-rsvp-modal-backdrop></div>
+        <section class="rsvp-thanks-card" role="dialog" aria-modal="true" aria-labelledby="thanks-title" aria-describedby="thanks-copy">
+            <div class="rsvp-thanks-art" aria-hidden="true"></div>
+            <p class="section-overline">Confirmación recibida</p>
+            <h2 id="thanks-title" class="rsvp-thanks-title">¡Gracias por responder!</h2>
+            <p id="thanks-copy" class="rsvp-thanks-copy">Nos hace mucha ilusión compartir este momento contigo.</p>
+
+            <form id="guest-message-form" class="guest-message-form">
+                <label for="mensaje-novios">¿Quieres dejarnos unas palabras?</label>
+                <textarea id="mensaje-novios" name="mensaje" rows="4" maxlength="600" placeholder="Un mensaje para Elizabeth y Víctor…"></textarea>
+                <button type="submit" id="send-message-btn" class="btn-submit modal-message-submit">Enviar mensaje</button>
+                <p id="message-response" class="message-response" aria-live="polite"></p>
+            </form>
+
+            <button type="button" id="finish-invitation" class="finish-invitation-btn">Finalizar invitación</button>
+        </section>
+    </div>
+
+    <!-- CIERRE DE LA EXPERIENCIA -->
+    <div id="invitation-finale" class="invitation-finale" hidden aria-hidden="true">
+        <div class="invitation-finale-content">
+            <div class="finale-floral" aria-hidden="true"></div>
+            <p class="section-overline">Gracias por ser parte de nuestra historia</p>
+            <h2>Con cariño,<br>Elizabeth, Víctor &amp; Camille</h2>
+            <p>Nos vemos el 5 de diciembre.</p>
         </div>
     </div>
 
