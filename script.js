@@ -4,6 +4,9 @@
 
 'use strict';
 
+const INVITATION_BUILD = '2026-10-03b';
+console.info('Invitación build', INVITATION_BUILD);
+
 const envelope = document.getElementById('envelope-container');
 const introStage = document.getElementById('intro-stage');
 const envelopePaper = document.getElementById('envelope-paper');
