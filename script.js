@@ -396,7 +396,7 @@ if (floatingRsvp && rsvpSection) {
     }
 }
 
-const scriptURL = 'REEMPLAZAR_CON_URL_DE_APPS_SCRIPT';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbx6kSCR04kuQr9g3UkfsNht1xD2uwH5Tyw7A9b2_dJ9Ax14ySDMxgaRnxY2gLKX8w90/exec';
 const form = document.getElementById('rsvp-form');
 
 form?.addEventListener('submit', async (event) => {
@@ -419,6 +419,7 @@ form?.addEventListener('submit', async (event) => {
     try {
         await fetch(scriptURL, {
             method: 'POST',
+            mode: 'no-cors',
             body: new FormData(form)
         });
 
