@@ -4,7 +4,7 @@
 
 'use strict';
 
-const INVITATION_BUILD = '2026-10-03b';
+const INVITATION_BUILD = '2026-10-03c';
 console.info('Invitación build', INVITATION_BUILD);
 
 const envelope = document.getElementById('envelope-container');
@@ -13,6 +13,8 @@ const envelopePaper = document.getElementById('envelope-paper');
 const envelopeFlap = document.getElementById('envelope-flap');
 const envelopeSeal = document.getElementById('envelope-seal');
 const openEnvelopeBtn = document.getElementById('open-envelope-btn');
+const storyVideoBtn = document.getElementById('start-story-video');
+const storyVideoBtnLabel = storyVideoBtn?.querySelector('.story-video-btn-label');
 const video = document.getElementById('intro-video');
 const introScreen = document.getElementById('intro-screen');
 const mainContent = document.getElementById('main-content');
@@ -22,11 +24,12 @@ const musicBtn = document.getElementById('music-toggle');
 
 let invitationStarted = false;
 let openingStarted = false;
+let videoStartRequested = false;
+let videoTransitionStarted = false;
 let revealObserver = null;
 
 const FLAP_DURATION = 620;
 const CARD_RISE_DURATION = 1220;
-const CARD_READ_TIME = 3900;
 const INTRO_FADE_DURATION = 620;
 
 const sleep = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
@@ -166,39 +169,108 @@ async function playIntroVideo() {
     await Promise.allSettled([flapAnimation.finished, cardAnimation.finished]);
     envelope.classList.add('is-open');
 
-    await sleep(CARD_READ_TIME);
+    // La carta permanece visible todo el tiempo que el invitado necesite.
+    // El vídeo solo empieza tras un segundo gesto explícito del usuario,
+    // compatible con las políticas de reproducción de Safari/iPhone.
+    if (openEnvelopeBtn) openEnvelopeBtn.style.display = 'none';
+
+    if (storyVideoBtn) {
+        storyVideoBtn.hidden = false;
+        requestAnimationFrame(() => {
+            storyVideoBtn.classList.add('is-visible');
+        });
+    }
+}
+
+function transitionFromCardToVideo() {
+    if (videoTransitionStarted) return;
+    videoTransitionStarted = true;
 
     if (video) {
         video.style.display = 'block';
         requestAnimationFrame(() => video.classList.add('is-visible'));
-        const playback = video.play();
-        if (playback && typeof playback.catch === 'function') playback.catch(() => {});
     }
 
     if (skipBtn) skipBtn.style.display = 'block';
 
     if (introStage) {
         introStage.animate([
-            { opacity: 1, transform: 'translate3d(0,0,0)' },
-            { opacity: 0, transform: 'translate3d(0,16px,0)' }
+            { opacity: 1, transform: 'translate3d(0,0,0) scale(1)' },
+            { opacity: 0, transform: 'translate3d(0,12px,0) scale(.985)' }
         ], {
             duration: INTRO_FADE_DURATION,
             easing: 'cubic-bezier(.3,.7,.25,1)',
             fill: 'forwards'
         });
+
+        window.setTimeout(() => {
+            introStage.style.display = 'none';
+        }, INTRO_FADE_DURATION);
+    }
+}
+
+function resetVideoStartButton() {
+    videoStartRequested = false;
+    videoTransitionStarted = false;
+
+    if (video) {
+        video.pause();
+        video.classList.remove('is-visible');
+        video.style.display = 'none';
     }
 
-    envelopePaper.animate([
-        { transform: 'translate3d(-50%, -75%, 0) scale(1)', opacity: 1 },
-        { transform: 'translate3d(-50%, -79%, 0) scale(1.01)', opacity: 0 }
-    ], {
-        duration: INTRO_FADE_DURATION,
-        easing: 'cubic-bezier(.3,.7,.25,1)',
-        fill: 'forwards'
-    });
+    if (storyVideoBtn) {
+        storyVideoBtn.disabled = false;
+        storyVideoBtn.classList.add('is-visible');
+    }
 
-    await sleep(INTRO_FADE_DURATION);
-    if (introStage) introStage.style.display = 'none';
+    if (storyVideoBtnLabel) {
+        storyVideoBtnLabel.textContent = 'Intentar de nuevo';
+    }
+
+    // Si el vídeo no pudiera reproducirse por cualquier motivo,
+    // el invitado siempre conserva una salida a la invitación.
+    if (skipBtn) skipBtn.style.display = 'block';
+}
+
+function startStoryVideo() {
+    if (invitationStarted || videoStartRequested || !video) return;
+    videoStartRequested = true;
+
+    if (storyVideoBtn) storyVideoBtn.disabled = true;
+    if (storyVideoBtnLabel) storyVideoBtnLabel.textContent = 'Preparando…';
+
+    // Preparamos el elemento antes de play(), pero lo mantenemos invisible.
+    // La carta sigue en pantalla mientras el vídeo carga, evitando pantallas en blanco.
+    video.style.display = 'block';
+    video.classList.remove('is-visible');
+
+    const onPlaying = () => {
+        if (storyVideoBtnLabel) storyVideoBtnLabel.textContent = 'Ver nuestra historia';
+        transitionFromCardToVideo();
+    };
+
+    video.addEventListener('playing', onPlaying, { once: true });
+
+    let playback;
+    try {
+        // IMPORTANTE: play() se llama directamente dentro del click del usuario.
+        // No hay awaits ni temporizadores antes de esta línea, para Safari/iPhone.
+        playback = video.play();
+    } catch (error) {
+        video.removeEventListener('playing', onPlaying);
+        console.error('No fue posible iniciar el vídeo:', error);
+        resetVideoStartButton();
+        return;
+    }
+
+    if (playback && typeof playback.catch === 'function') {
+        playback.catch((error) => {
+            video.removeEventListener('playing', onPlaying);
+            console.error('El navegador bloqueó o no pudo iniciar el vídeo:', error);
+            resetVideoStartButton();
+        });
+    }
 }
 
 function openEnvelope() {
@@ -216,6 +288,7 @@ if (envelope) {
 }
 
 openEnvelopeBtn?.addEventListener('click', openEnvelope);
+storyVideoBtn?.addEventListener('click', startStoryVideo);
 video?.addEventListener('ended', startInvitation);
 skipBtn?.addEventListener('click', startInvitation);
 
