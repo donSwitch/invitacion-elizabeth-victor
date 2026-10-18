@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20261003c">
+    <link rel="stylesheet" href="style.css?v=20261018-vestimenta1">
 </head>
 <body>
 
@@ -358,14 +358,40 @@
                 </article>
             </div>
 
-            <div class="dress-note">
-                <span class="dress-icon" aria-hidden="true">✦</span>
-                <div>
+            <!-- CÓDIGO DE VESTIMENTA · Cambia solo el PNG de assets/img/icono-vestimenta.png si deseas otro dibujo. -->
+            <div class="dress-note" aria-labelledby="dress-title">
+                <div class="dress-note-heading">
                     <p class="dress-label">Código de vestimenta</p>
-                    <h3>Formal</h3>
-                    <p><strong>Damas:</strong> sugerimos evitar el color blanco y beige. <strong>Caballeros:</strong> camisa y corbata.</p>
-                    <p class="dress-weather">Les sugerimos contemplar un abrigo para la tarde andina.</p>
+                    <h3 id="dress-title">Formal</h3>
+                    <img class="dress-attire-icon" src="assets/img/icono-vestimenta.png" alt="Ilustración de camisa con corbata y vestido de gala" width="280" height="135" loading="lazy" decoding="async">
+                    <p class="dress-note-lead">Una pequeña guía de tonos que queremos reservar para este día.</p>
                 </div>
+
+                <div class="dress-guides">
+                    <article class="dress-guide" aria-labelledby="dress-women-title">
+                        <p class="dress-guide-kicker">Para ellas</p>
+                        <h4 id="dress-women-title">Damas</h4>
+                        <p class="dress-guide-attire">Vestido formal</p>
+                        <p class="dress-swatch-label">Por favor, evitar estos colores</p>
+                        <div class="dress-swatches" aria-label="Colores a evitar en vestidos: beige, blanco y vino">
+                            <div class="dress-swatch-item"><span class="dress-swatch" style="--swatch-color:#D9C5B7" aria-hidden="true"></span><span>Beige</span></div>
+                            <div class="dress-swatch-item"><span class="dress-swatch dress-swatch-white" style="--swatch-color:#FFFFFF" aria-hidden="true"></span><span>Blanco</span></div>
+                            <div class="dress-swatch-item"><span class="dress-swatch" style="--swatch-color:#6F2430" aria-hidden="true"></span><span>Vino</span></div>
+                        </div>
+                    </article>
+
+                    <article class="dress-guide" aria-labelledby="dress-men-title">
+                        <p class="dress-guide-kicker">Para ellos</p>
+                        <h4 id="dress-men-title">Caballeros</h4>
+                        <p class="dress-guide-attire">Camisa y corbata</p>
+                        <p class="dress-swatch-label">Evitar trajes en estos colores</p>
+                        <div class="dress-swatches" aria-label="Colores a evitar en trajes: café y vino">
+                            <div class="dress-swatch-item"><span class="dress-swatch" style="--swatch-color:#70503F" aria-hidden="true"></span><span>Café</span></div>
+                            <div class="dress-swatch-item"><span class="dress-swatch" style="--swatch-color:#6F2430" aria-hidden="true"></span><span>Vino</span></div>
+                        </div>
+                    </article>
+                </div>
+                <p class="dress-weather">Les sugerimos contemplar un abrigo para la tarde andina.</p>
             </div>
         </section>
 
