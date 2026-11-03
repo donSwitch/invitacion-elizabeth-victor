@@ -1583,6 +1583,71 @@ body.lightbox-open {
     font-size: .8rem;
 }
 
+/* Datos bancarios: mismos tonos y jerarquía editorial que el resto de la invitación */
+.gift-transfer-caption {
+    margin: .15rem 0 .8rem;
+    color: var(--cobre);
+    font-family: var(--fuente-texto);
+    font-size: .72rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+.gift-account-field {
+    padding: .8rem .9rem;
+    border: 1px solid rgba(181,107,69,.22);
+    border-radius: 14px;
+    background: rgba(255,255,255,.43);
+}
+.gift-field-label {
+    display: block;
+    font-size: .7rem;
+    letter-spacing: .1em;
+    color: var(--cobre);
+    text-transform: uppercase;
+}
+.gift-account-field .account-copy-row { margin: .25rem 0 0; flex-wrap: wrap; }
+.gift-account-field code { font-size: 1.15rem; letter-spacing: .09em; }
+.gift-details {
+    display: grid;
+    gap: .55rem;
+    margin: 1rem auto;
+    text-align: left;
+}
+.gift-detail {
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr);
+    gap: .75rem;
+    align-items: baseline;
+    padding-bottom: .45rem;
+    border-bottom: 1px solid rgba(99,35,50,.10);
+}
+.gift-detail dt {
+    color: var(--cobre);
+    font-size: .75rem;
+    font-weight: 600;
+}
+.gift-detail dd {
+    margin: 0;
+    color: var(--burdeos);
+    font-size: .86rem;
+    overflow-wrap: anywhere;
+}
+.copy-transfer {
+    margin-top: .35rem;
+    padding: .7rem 1.25rem;
+    border: 1px solid rgba(181,107,69,.34);
+    border-radius: 999px;
+    background: rgba(255,255,255,.65);
+    color: var(--burdeos);
+    font: 600 .8rem var(--fuente-texto);
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease;
+}
+.copy-transfer:hover, .copy-transfer:focus-visible {
+    background: rgba(181,107,69,.10);
+    border-color: var(--cobre);
+}
+
 /* =========================================================
    RSVP
    ========================================================= */
@@ -1639,6 +1704,51 @@ select:focus {
 .form-group.is-hidden {
     display: none;
 }
+
+.guest-count-heading {
+    color: var(--burdeos);
+    font-size: .86rem;
+    font-weight: 600;
+    margin: 0 0 .7rem;
+}
+.guest-count-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+.guest-count-field label { margin-bottom: .35rem; }
+.guest-count-field select {
+    min-height: 48px;
+    cursor: pointer;
+    padding-right: .65rem;
+}
+.guest-count-hint {
+    margin: .55rem 0 0;
+    font-size: .78rem;
+    color: var(--gris-texto, #665C58);
+    line-height: 1.5;
+}
+.guest-total {
+    padding: .65rem .8rem;
+    margin: .7rem 0 0;
+    border-radius: 12px;
+    border: 1px solid rgba(181,107,69,.16);
+    background: rgba(181,107,69,.06);
+    color: var(--burdeos);
+    font-size: .83rem;
+    text-align: center;
+}
+.guest-validation {
+    color: #923B42;
+    font-size: .8rem;
+    margin: .45rem 0 0;
+}
+.guest-validation[hidden] { display: none; }
+@media (max-width: 370px) {
+    .guest-count-grid { gap: .55rem; }
+    .guest-count-field select { font-size: .92rem; }
+}
+
 
 .btn-submit {
     display: block;

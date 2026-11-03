@@ -402,29 +402,59 @@ if (giftToggle && giftPanel) {
     });
 }
 
+// Copia confiable en HTTPS y como alternativa en navegadores que lo permiten.
+async function copyTransferText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+    }
+    const temp = document.createElement('textarea');
+    temp.value = text;
+    temp.setAttribute('readonly', '');
+    temp.style.position = 'fixed';
+    temp.style.left = '-9999px';
+    document.body.appendChild(temp);
+    temp.focus();
+    temp.select();
+    const copied = document.execCommand('copy');
+    temp.remove();
+    if (!copied) throw new Error('No se pudo copiar el texto');
+}
+
+let giftCopyFeedbackTimeout;
+function showGiftCopyFeedback(message) {
+    if (!copyFeedback) return;
+    copyFeedback.textContent = message;
+    window.clearTimeout(giftCopyFeedbackTimeout);
+    giftCopyFeedbackTimeout = window.setTimeout(() => {
+        copyFeedback.textContent = '';
+    }, 3200);
+}
+
 copyAccountBtn?.addEventListener('click', async () => {
     const account = document.getElementById('bank-account')?.textContent?.trim() || '';
     if (!account) return;
-
     try {
-        await navigator.clipboard.writeText(account);
+        await copyTransferText(account);
+        showGiftCopyFeedback('Número de cuenta copiado ♡');
     } catch {
-        const temp = document.createElement('textarea');
-        temp.value = account;
-        temp.setAttribute('readonly', '');
-        temp.style.position = 'fixed';
-        temp.style.opacity = '0';
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand('copy');
-        temp.remove();
+        showGiftCopyFeedback('No pudimos copiarlo automáticamente. Mantén presionado el número para copiarlo.');
     }
+});
 
-    if (copyFeedback) {
-        copyFeedback.textContent = 'Número de cuenta copiado.';
-        window.setTimeout(() => {
-            copyFeedback.textContent = '';
-        }, 2200);
+document.getElementById('copy-all-transfer')?.addEventListener('click', async () => {
+    const transferDetails = [
+        'Banco Guayaquil',
+        `Número de cuenta: ${document.getElementById('bank-account')?.textContent?.trim() || ''}`,
+        `Titular: ${document.getElementById('bank-holder')?.textContent?.trim() || ''}`,
+        `Cédula: ${document.getElementById('bank-id')?.textContent?.trim() || ''}`,
+        `Correo: ${document.getElementById('bank-email')?.textContent?.trim() || ''}`
+    ].join('\n');
+    try {
+        await copyTransferText(transferDetails);
+        showGiftCopyFeedback('Datos para transferencia copiados ♡');
+    } catch {
+        showGiftCopyFeedback('No pudimos copiarlos automáticamente. Puedes seleccionarlos manualmente.');
     }
 });
 
@@ -434,7 +464,10 @@ copyAccountBtn?.addEventListener('click', async () => {
 
 const attendanceSelect = document.getElementById('asistencia');
 const guestsGroup = document.getElementById('guests-group');
-const guestsInput = document.getElementById('personas');
+const adultsSelect = document.getElementById('adultos');
+const childrenSelect = document.getElementById('ninos');
+const guestTotalLabel = document.getElementById('guest-total');
+const guestValidation = document.getElementById('guest-validation');
 const floatingRsvp = document.getElementById('floating-rsvp');
 const rsvpSection = document.getElementById('rsvp');
 
@@ -455,17 +488,50 @@ function createRsvpId() {
     return `rsvp-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
+function countGuests() {
+    const adults = adultsSelect?.value === '' ? NaN : Number(adultsSelect?.value);
+    const children = childrenSelect?.value === '' ? NaN : Number(childrenSelect?.value);
+    return { adults, children, total: adults + children };
+}
+
+function formatGuestPart(value, singular, plural) {
+    return `${value} ${value === 1 ? singular : plural}`;
+}
+
+function updateGuestTotal() {
+    if (!guestTotalLabel) return;
+    if (guestValidation) {
+        guestValidation.hidden = true;
+        guestValidation.textContent = '';
+    }
+    if (attendanceSelect?.value !== 'Sí, allí estaremos') return;
+    const { adults, children, total } = countGuests();
+    if (!Number.isInteger(adults) || !Number.isInteger(children)) {
+        guestTotalLabel.textContent = 'Selecciona la cantidad de adultos y niños.';
+        return;
+    }
+    guestTotalLabel.textContent = `Total: ${total} ${total === 1 ? 'persona' : 'personas'} · ${formatGuestPart(adults, 'adulto', 'adultos')} y ${formatGuestPart(children, 'niño', 'niños')}`;
+}
+
 function updateGuestsField() {
-    if (!attendanceSelect || !guestsGroup || !guestsInput) return;
+    if (!attendanceSelect || !guestsGroup || !adultsSelect || !childrenSelect) return;
     const attending = attendanceSelect.value === 'Sí, allí estaremos';
     guestsGroup.classList.toggle('is-hidden', !attending);
-    guestsInput.required = attending;
-    guestsInput.disabled = !attending;
-    if (!attending) guestsInput.value = '';
+    adultsSelect.required = attending;
+    childrenSelect.required = attending;
+    adultsSelect.disabled = !attending;
+    childrenSelect.disabled = !attending;
+    if (!attending) {
+        adultsSelect.value = '';
+        childrenSelect.value = '0';
+    }
+    updateGuestTotal();
 }
 
 if (attendanceSelect) {
     attendanceSelect.addEventListener('change', updateGuestsField);
+    adultsSelect?.addEventListener('change', updateGuestTotal);
+    childrenSelect?.addEventListener('change', updateGuestTotal);
     updateGuestsField();
 }
 
@@ -553,6 +619,20 @@ form?.addEventListener('submit', async (event) => {
     const response = document.getElementById('form-response');
     if (!button || !response) return;
 
+    const attendanceValue = String(attendanceSelect?.value || '');
+    const isAttending = attendanceValue === 'Sí, allí estaremos';
+    const { adults, children, total } = countGuests();
+    if (isAttending && (!Number.isInteger(adults) || !Number.isInteger(children) || total < 1 || total > 12)) {
+        if (guestValidation) {
+            guestValidation.textContent = total > 12
+                ? 'Para grupos de más de 12 personas, escríbenos y te ayudamos a confirmar.'
+                : 'Indica al menos una persona para poder confirmar la asistencia.';
+            guestValidation.hidden = false;
+        }
+        (adultsSelect?.value === '' ? adultsSelect : childrenSelect)?.focus();
+        return;
+    }
+
     button.textContent = 'Enviando...';
     button.disabled = true;
 
@@ -563,9 +643,17 @@ form?.addEventListener('submit', async (event) => {
         return;
     }
 
-    const attendanceValue = String(attendanceSelect?.value || '');
     currentRsvpId = createRsvpId();
     const payload = new FormData(form);
+    // Compatibilidad: el Apps Script actual guarda "personas" en una única columna.
+    // Incluimos el total y el desglose en ese campo para que se conserven sin modificar Apps Script.
+    // Además se envían los campos estructurados para una futura actualización de la hoja.
+    payload.set('personas', isAttending
+        ? `${total} (${formatGuestPart(adults, 'adulto', 'adultos')}, ${formatGuestPart(children, 'niño', 'niños')})`
+        : '');
+    payload.set('total_personas', isAttending ? String(total) : '0');
+    payload.set('adultos', isAttending ? String(adults) : '0');
+    payload.set('ninos', isAttending ? String(children) : '0');
     payload.append('action', 'rsvp');
     payload.append('rsvp_id', currentRsvpId);
 

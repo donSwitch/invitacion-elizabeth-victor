@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20261018-vestimenta1">
+    <link rel="stylesheet" href="style.css?v=20261102-regalos-rsvp2">
 </head>
 <body>
 
@@ -407,14 +407,22 @@
             <button id="gift-toggle" class="gift-toggle" type="button" aria-expanded="false" aria-controls="gift-panel">♡ Ver opción de regalo</button>
 
             <div id="gift-panel" class="gift-panel" hidden>
-                <p class="gift-bank">Banco Pichincha</p>
-                <p>Cuenta de Ahorros</p>
-                <div class="account-copy-row">
-                    <code id="bank-account">0000000000</code>
-                    <button id="copy-account" class="copy-account" type="button">Copiar</button>
+                <p class="gift-bank">Banco Guayaquil</p>
+                <p class="gift-transfer-caption">Datos para transferencia</p>
+                <div class="gift-account-field">
+                    <span class="gift-field-label">Número de cuenta</span>
+                    <div class="account-copy-row">
+                        <code id="bank-account">0015086445</code>
+                        <button id="copy-account" class="copy-account" type="button" aria-label="Copiar número de cuenta">Copiar número</button>
+                    </div>
                 </div>
-                <p class="gift-holder">Víctor España · CI: 17XXXXXXX</p>
-                <p id="copy-feedback" class="copy-feedback" aria-live="polite"></p>
+                <dl class="gift-details">
+                    <div class="gift-detail"><dt>Titular</dt><dd id="bank-holder">Victor David España Cruz</dd></div>
+                    <div class="gift-detail"><dt>Cédula</dt><dd id="bank-id">1726171877</dd></div>
+                    <div class="gift-detail"><dt>Correo</dt><dd id="bank-email">vdavid_cruz@hotmail.com</dd></div>
+                </dl>
+                <button id="copy-all-transfer" class="copy-transfer" type="button">Copiar todos los datos</button>
+                <p id="copy-feedback" class="copy-feedback" role="status" aria-live="polite"></p>
             </div>
         </section>
 
@@ -442,8 +450,49 @@
                 </div>
 
                 <div class="form-group" id="guests-group">
-                    <label for="personas">Número de personas</label>
-                    <input type="number" id="personas" name="personas" min="1" max="12" inputmode="numeric" placeholder="Ej. 2">
+                    <p class="guest-count-heading" id="guest-count-heading">¿Cuántos nos acompañarán?</p>
+                    <div class="guest-count-grid" role="group" aria-labelledby="guest-count-heading">
+                        <div class="guest-count-field">
+                            <label for="adultos">Adultos</label>
+                            <select id="adultos" name="adultos" required>
+                                <option value="" disabled selected>Selecciona</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            </select>
+                        </div>
+                        <div class="guest-count-field">
+                            <label for="ninos">Niños</label>
+                            <select id="ninos" name="ninos" required>
+                            <option value="0" selected>0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="guest-count-hint">Incluye a todas las personas que asistirán, también a los más pequeños.</p>
+                    <p class="guest-total" id="guest-total" aria-live="polite">Selecciona la cantidad de adultos.</p>
+                    <p class="guest-validation" id="guest-validation" role="alert" hidden></p>
                 </div>
 
                 <div class="form-group">
@@ -516,6 +565,6 @@
         <span class="floating-rsvp-label floating-rsvp-label-short">Confirmar</span>
     </a>
 
-    <script src="script.js?v=20261003c"></script>
+    <script src="script.js?v=20261102-regalos-rsvp2"></script>
 </body>
 </html>
